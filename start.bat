@@ -1,3 +1,3 @@
-node ./main.mjs
+node ./client.mjs
 
 pause
