@@ -5,7 +5,7 @@ class Command {
     this.description;
     this.action;
     this.cooldown;
-    this.cooldownActive = false;
+    this.cooldownActives = {};
   }
   setName(tempName){
     this.name = tempName;
@@ -22,12 +22,20 @@ class Command {
   setAction(tempAction){
     this.action = tempAction;
   }
-  run(tempMessage){
+  run(tempMessage, tempArgs){
     if(!this.cooldownActive){
-      this.action();
-      this.cooldownActive = true;
+      this.action(tempMessage, tempArgs);
+      if(!this.cooldownActives[tempMessage.guild.id]){
+        this.cooldownActives[tempMessage.guild.id] = {};
+      }
+      if(!this.cooldownActives[tempMessage.guild.id][tempMessage.author.id]){
+        this.cooldownActives[tempMessage.guild.id][tempMessage.author.id] = {
+          "active": false,
+        };
+      }
+      this.cooldownActives[tempMessage.guild.id][tempMessage.author.id].active = true;
       setTimeout(() => {
-        this.cooldownActive = false;
+        this.cooldownActives[tempMessage.guild.id][tempMessage.author.id].active = false;
         tempMessage.reply(`filler`);
       }, this.cooldown);
     } else {
