@@ -32,9 +32,13 @@ client.on("guildMemberAdd", async () => {
 
 });
 
+client.on("message", async () => {
+
+});
+
 
 
 // Client Login
 
-const token = fs.readFileSync("./token.json");
-bot.login(token);
+const token = JSON.parse(fs.readFileSync("./token.json"));
+bot.login(token.token);
