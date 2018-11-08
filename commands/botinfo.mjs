@@ -21,5 +21,17 @@ const botinfo = new Command()
   .setDescription("Shows information about the bot.")
   .setCooldown(60);
   .setAction((tempMessage) => {
-    let embed = new Discord.RichEmbed();
+    let embed = new Discord.RichEmbed()
+      .setTitle("*BotInfo*")
+      .setColor("#620b91")
+      .addField("Ping", client.ping)
+      .addField("Server count", client.guilds.size);
+    
+    tempMessage.channel.send(embed);
   });
+
+
+
+// Export 
+
+export default botinfo;
